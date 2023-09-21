@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "zrDcbo70djpWwInyYKOENxAFyiO1QVLWV1Ox3GydYPY=",
+  "Source": "API_Gerenciador_Tarefas",
+  "BasePath": "_content/API_Gerenciador_Tarefas",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
