@@ -20,26 +20,26 @@ namespace API_Gerenciador_Tarefas.Controllers
             _Organizador = Banco;
         }
 
-        [HttpPost("CriarTarefa")]
-        public IActionResult Criar(Tarefa t)
-        {
-            _Organizador.Add(t);
-            _Organizador.SaveChanges();
-            return Ok(t);
-        }
-
-        [HttpGet("buscarTarefa/{id}")]
-        public IActionResult Teste(int id)
+        [HttpGet("{id}")]
+        public IActionResult BuscarPorId(int id)
         {
             var resultado = _Organizador.Tarefas.Find(id);
             return Ok(resultado);
-        }
 
-        [HttpGet("RetornarTodos")]
-        public IActionResult RetornarTabela()
+        }
+        [HttpPut("{id}")]
+        public IActionResult Editar(Tarefa t)
         {
-            var resultado = _Organizador.Tarefas;
-            return Ok(resultado);
+            var tarefa = _Organizador.Tarefas.Find(t.Id);
+
+            tarefa.Titulo = t.Titulo;
+            tarefa.Descricao = t.Descricao;
+            tarefa.Data = t.Data;
+            tarefa.Status = t.Status;
+
+            _Organizador.Tarefas.Update(tarefa);
+            _Organizador.SaveChanges();
+            return Ok(t);
         }
 
         [HttpDelete("{id}")]
@@ -51,5 +51,40 @@ namespace API_Gerenciador_Tarefas.Controllers
             return Ok(resultado);
         }
 
+
+
+        [HttpGet("ObterTodos")]
+        public IActionResult RetornarTabela()
+        {
+            var resultado = _Organizador.Tarefas;
+            return Ok(resultado);
+        }
+        [HttpGet("ObterPorTitulo")]
+        public IActionResult ObterPorTitulo(string titulo)
+        {
+            var resultado = _Organizador.Tarefas.Where(tarefa => tarefa.Titulo == titulo).ToList();
+            return Ok(resultado);
+        }
+        [HttpGet("ObterPorData")]
+        public IActionResult ObterPorData(DateTime data)
+        {
+            var resultado = _Organizador.Tarefas.Where(tarefa => tarefa.Data == data).ToList();
+            return Ok(resultado);
+        }
+        [HttpGet("ObterPorStatus")]
+        public IActionResult ObterPorStatus(EnumStatusTarefa status)
+        {
+            var resultado = _Organizador.Tarefas.Where(tarefa => tarefa.Status == status).ToList();
+            return Ok(resultado);
+        }
+
+
+        [HttpPost]
+        public IActionResult Criar(Tarefa t)
+        {
+            _Organizador.Add(t);
+            _Organizador.SaveChanges();
+            return Ok(t);
+        }
     }
 }
